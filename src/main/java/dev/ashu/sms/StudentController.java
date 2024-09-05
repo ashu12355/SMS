@@ -13,18 +13,6 @@ public class StudentController {
     @GetMapping({"/","/student"})
     Student home() {
     var student = new Student();
-    student.setName("Ashutosh");
-    student.setRoll(101);
-    student.setFee(123.4);
-    student.setHobbies(List.of("Singing","Playing"));
-
-    var address = new Address();
-    address.setCity("Forbesganj");
-    address.setState("Bihar");
-
-    student.setAddress(address);
-
-
     return student;
     }
 }
