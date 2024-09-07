@@ -1,18 +1,45 @@
 package dev.ashu.sms;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.XSlf4j;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin
-public class StudentController {
+@RequestMapping("/students")
 
-    @GetMapping({"/","/student"})
-    Student home() {
-    var student = new Student();
-    return student;
+@RequiredArgsConstructor
+@Slf4j
+
+public class StudentController {
+    private final StudentService service;
+
+
+    @GetMapping
+    List<Student> students(){
+        return service.getStudents();
     }
+    @GetMapping("/{roll}")
+    Student student(@PathVariable int roll){
+        return service.getStudent(roll);
+}
+
+    @PutMapping("/{roll}")
+    Student updateStudent(@PathVariable int roll , @RequestBody Student student) {
+        return service.updateStudent(roll,student);
+    }
+
+   @PostMapping
+    Student createStudent(@RequestBody Student student){
+        log.info(student.toString());
+        service.addStudent(student);
+        return student;
+    }
+   @DeleteMapping("/{roll}")
+   void deleteStudent(@PathVariable int roll){
+        service.removeStudent(roll);
+   }
 }
