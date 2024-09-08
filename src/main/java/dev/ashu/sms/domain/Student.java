@@ -1,9 +1,6 @@
 package dev.ashu.sms.domain;
 
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -17,4 +14,8 @@ public class Student {
     private String email;
     @Embedded
     private Address address;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_detail_id")
+    private StudentDetail studentDetail;
 }

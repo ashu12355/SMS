@@ -1,6 +1,8 @@
 package dev.ashu.sms.controller;
 
 import dev.ashu.sms.domain.Student;
+import dev.ashu.sms.dto.StudentResponseDto;
+import dev.ashu.sms.mapper.StudentMapper;
 import dev.ashu.sms.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,25 +23,29 @@ public class StudentController {
 
 
     @GetMapping
-    List<Student> students(){
-        return service.getStudents();
+    List<StudentResponseDto> students(){
+        return service.getStudents().stream()
+                .map(StudentMapper::convertStudent).toList();
     }
     @GetMapping("/{roll}")
-    Student student(@PathVariable int roll){
-        return service.getStudent(roll);
+    StudentResponseDto student(@PathVariable int roll){
+        var response = service.getStudent(roll);
+        return StudentMapper.convertStudent(response);
 }
 
     @PutMapping("/{roll}")
-    Student updateStudent(@PathVariable int roll , @RequestBody Student student) {
-        return service.updateStudent(roll,student);
+    StudentResponseDto updateStudent(@PathVariable int roll , @RequestBody Student student) {
+        var response = service.updateStudent(roll, student);
+        return StudentMapper.convertStudent(response);
     }
 
    @PostMapping
    @ResponseStatus(HttpStatus.CREATED)
-    Student createStudent(@RequestBody Student student){
+   StudentResponseDto createStudent(@RequestBody Student student){
         log.info(student.toString());
-        service.addStudent(student);
-        return student;
+      var response = service.addStudent(student);
+      return StudentMapper.convertStudent(student);
+
     }
    @DeleteMapping("/{roll}")
    void deleteStudent(@PathVariable int roll){
