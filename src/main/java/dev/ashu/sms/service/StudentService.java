@@ -1,6 +1,8 @@
-package dev.ashu.sms;
+package dev.ashu.sms.service;
 
 
+import dev.ashu.sms.domain.Student;
+import dev.ashu.sms.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,10 @@ public class StudentService {
 
     public void removeStudent(int roll) {
         repository.deleteById(roll);
+    }
+    public void incrementFee(int roll , double fee){
+        repository.incrementFee(fee,roll);
+
     }
 
 

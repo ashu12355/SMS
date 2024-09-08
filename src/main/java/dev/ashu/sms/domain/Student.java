@@ -1,5 +1,7 @@
-package dev.ashu.sms;
+package dev.ashu.sms.domain;
 
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
@@ -12,5 +14,7 @@ public class Student {
     private int roll;       // Primary Key
     private String name;    // Student name
     private double fee;     // Student fee
-    private String email;   // Student email
+    private String email;
+    @Embedded
+    private Address address;
 }
